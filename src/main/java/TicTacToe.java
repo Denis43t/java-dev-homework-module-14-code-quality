@@ -3,12 +3,11 @@ import java.util.Scanner;
 public class TicTacToe {
     private static final char PLAYER_X = 'X';
     private static final char PLAYER_O = 'О';
-    byte input;
-    boolean boxAvailable = false;
-    boolean boxEmpty = false;
-    char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
-    byte winner = 0;
-    Scanner scan = new Scanner(System.in);
+    private boolean boxAvailable = false;
+    private boolean boxEmpty = false;
+    private final char[] box = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+    private byte winner = 0;
+    private static final Scanner scan = new Scanner(System.in);
     private final int[][] WINNING_COMBINATIONS = {
             {0, 1, 2}, // горизонтально 1 рядок
             {3, 4, 5}, // горизонтально 2 рядок
@@ -20,7 +19,7 @@ public class TicTacToe {
             {2, 4, 6}  // діагональ справа наліво
     };
 
-    public void displayBoard() {
+    private void displayBoard() {
         System.out.println("\n\n " + this.box[0] + " | " + this.box[1] + " | " + this.box[2] + " ");
         System.out.println("-----------");
         System.out.println(" " + this.box[3] + " | " + this.box[4] + " | " + this.box[5] + " ");
@@ -34,7 +33,7 @@ public class TicTacToe {
         }
     }
 
-    public void checkOnEndGame() {
+    private void checkOnEndGame() {
         switch (this.winner) {
             case (1):
                 System.out.println("You won the game!\nCreated by Shreyas Saha. Thanks for playing!");
@@ -50,9 +49,9 @@ public class TicTacToe {
         }
     }
 
-    public void characterInputInBox(Scanner scan) {
+    private void characterInputInBox() {
         while (true) {
-            input = scan.nextByte();
+            byte input = scan.nextByte();
             if (input > 0 && input < 10) {
                 if (this.box[input - 1] == 'X' || this.box[input - 1] == 'O')
                     System.out.println("That one is already in use. Enter another.");
@@ -66,7 +65,7 @@ public class TicTacToe {
         }
     }
 
-    public void checkOnPlayerWin() {
+    private void checkOnPlayerWin() {
         for (int[] combination : WINNING_COMBINATIONS) {
             if (box[combination[0]] == PLAYER_X &&
                     box[combination[1]] == PLAYER_X &&
@@ -77,7 +76,7 @@ public class TicTacToe {
         }
     }
 
-    public void checkOnComputerWin() {
+    private void checkOnComputerWin() {
         for (int[] combination : WINNING_COMBINATIONS) {
             if (box[combination[0]] == PLAYER_O &&
                     box[combination[1]] == PLAYER_O &&
@@ -88,13 +87,13 @@ public class TicTacToe {
         }
     }
 
-    public void checkOnDraw() {
+    private void checkOnDraw() {
         if (!boxAvailable) {
             winner = 3;
         }
     }
 
-    public void checkBoxAvailable() {
+    private void checkBoxAvailable() {
         boxAvailable = false;
         for (int i = 0; i < 9; i++) {
             if (box[i] != 'X' && box[i] != 'O') {
@@ -104,7 +103,7 @@ public class TicTacToe {
         }
     }
 
-    public void computerMove() {
+    private void computerMove() {
         if(!boxAvailable) return;
         while (true) {
            byte rand = (byte) (Math.random() * (9 - 1 + 1) + 1);
@@ -124,7 +123,7 @@ public class TicTacToe {
         sendStartInfo();
         while (winner == 0) {
             displayBoard();
-            characterInputInBox(scan);
+            characterInputInBox();
             checkBoxAvailable();
             checkOnDraw();
             checkOnPlayerWin();
